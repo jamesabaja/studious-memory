@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from django.conf.urls import include	
+from tickets import views
+from tickets.views import UserPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$', views.HomePageView.as_view(), name='home'),
+    url(r'^$', views.UserPageView.as_view(), name='user'),
+    #url(r'^$', views.UserPageView.as_view(), name='user'),
 ]
