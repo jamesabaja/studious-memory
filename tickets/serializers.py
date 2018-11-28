@@ -54,7 +54,7 @@ class CurrentTerminalSerializer(serializers.ModelSerializer):
 
 
 '''
-from tickets.serializers import PassengerSerializer, BusSerializer, TerminalSerializer,DriverSerializer,TripSerializer,RatingSerializer
+from tickets.serializers import PassengerSerializer, BusSerializer, TerminalSerializer,DriverSerializer,TripSerializer,RatingSerializer,BookingSerializer,Bus_TripSerializer,Bus_DriverSerializer,CurrentTerminalSerializer
 serializer = PassengerSerializer()
 print(repr(serializer))
 serializer = BusSerializer()
@@ -73,6 +73,8 @@ serializer = Bus_TripSerializer()
 print(repr(serializer))
 serializer = Bus_DriverSerializer()
 print(repr(serializer))
-serializer = BusSerializer()
+serializer = CurrentTerminalSerializer()
 print(repr(serializer))
+
+
 '''
