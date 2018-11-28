@@ -18,11 +18,13 @@ from django.urls import path
 from django.conf.urls import url
 from django.conf.urls import include	
 from tickets import views
-from tickets.views import UserPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', views.HomePageView.as_view(), name='home'),
-    url(r'^$', views.UserPageView.as_view(), name='user'),
+    path('', include('tickets.urls')),
+    #url(r'^$', views.HomePageView.as_view(), name='home'),
+    #url(r'^$', UserPageView, name="process"),
+    #url(r'^$',views.UserPageView, name = 'process'),
+    #url(r'^$', UserPageView, name='user'),
     #url(r'^$', views.UserPageView.as_view(), name='user'),
 ]

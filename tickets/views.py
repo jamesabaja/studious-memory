@@ -3,56 +3,38 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.template import RequestContext, Template
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from tickets.models import Passenger, Bus, Terminal, Driver, Trip, Rating, Booking, Bus_Trip, Bus_Driver, CurrentTerminal
+from tickets.serializers import PassengerSerializer, BusSerializer, TerminalSerializer,DriverSerializer,TripSerializer,RatingSerializer,BookingSerializer,Bus_TripSerializer,Bus_DriverSerializer,CurrentTerminalSerializer
 
-class HomePageView(TemplateView):
-    template_name = "index.html"
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def PassengerViews(request, pk):
+    try:
+        passengers = Passenger.objects.get(userID = pk)
+    except Passenger.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
 
-class UserPageView(TemplateView):
-    template_name = "user.html"
+    if request.method == 'GET':
+        serializer = PassengerSerializer(passengers)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = PassengerSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'PUT':
+        serializer = PassengerSerializer(passengers, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        passengers.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
 
-'''def UserPageView(TemplateView):
-     #return HttpResponseRedirect("https://www.dropbox.com")
-     return redirect("/user.html")'''
-
-'''
-# Add this view
-class DataPageView(TemplateView):
-    def get(self, request, **kwargs):
-        context = {
-            'data': [
-                {
-                    'name': 'Celeb 1',
-                    'worth': '3567892'
-                },
-                {
-                    'name': 'Celeb 2',
-                    'worth': '23000000'
-                },
-                {
-                    'name': 'Celeb 3',
-                    'worth': '1000007'
-                },
-                {
-                    'name': 'Celeb 4',
-                    'worth': '456789'
-                },
-                {
-                    'name': 'Celeb 5',
-                    'worth': '7890000'
-                },
-                {
-                    'name': 'Celeb 6',
-                    'worth': '12000456'
-                },
-                {
-                    'name': 'Celeb 7',
-                    'worth': '896000'
-                },
-                {
-                    'name': 'Celeb 8',
-                    'worth': '670000'
-                }
-            ]
-        }
-
-        return render(request, 'data.html', context)'''
