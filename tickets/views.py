@@ -104,7 +104,7 @@ def TerminalList(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def TerminalGet(request, pk):
+def TerminalViews(request, pk):
     try:
         terminals = Terminal.objects.get(terminalID=pk)
     except Terminal.DoesNotExist:
