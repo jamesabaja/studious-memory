@@ -52,8 +52,8 @@ class Rating(models.Model):
     return '%s (%s)' % (self.tripID, self.userID)
  
 class Booking(models.Model):
-  userID = models.OneToOneField(Passenger, on_delete=models.CASCADE)
-  tripID = models.OneToOneField(Trip, on_delete=models.CASCADE)
+  userID = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+  tripID = models.ForeignKey(Trip, on_delete=models.CASCADE)
   class Meta:
     unique_together = (('userID', 'tripID'),)
 

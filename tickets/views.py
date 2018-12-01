@@ -226,7 +226,7 @@ def RatingList(request):
 def RatingViews(request, pk):
     try:
         rating = Rating.objects.get(userID=pk, tripID=pk)
-    except Ratingng.DoesNotExist:
+    except Rating.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
@@ -264,12 +264,12 @@ def BookingList(request):
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def BookingViews(request, pk):
     try:
-        booking = Booking.objects.get(userID=pk, tripID=pk)
+        booking = Booking.objects.filter(userID=pk)
     except Booking.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = BookingSerializer(booking)
+        serializer = BookingSerializer(booking, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = BookingSerializer(data = request.data)
