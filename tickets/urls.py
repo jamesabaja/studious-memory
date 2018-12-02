@@ -18,7 +18,7 @@ urlpatterns = [
     path('rating/', views.RatingList),
     #path('rating/<#>', views.RatingViews)
     path('booking/', views.BookingList),
-    path('booking/<str:pk>', views.BookingViews),
+    path('booking/<str:pk>/', views.BookingViews),
     path('bus_trip/', views.Bus_TripList),
     #path('bus_trip/<#>', views.Bus_TripViews),
     path('bus_driver/', views.Bus_DriverList),
