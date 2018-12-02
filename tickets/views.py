@@ -248,7 +248,7 @@ def RatingViews(request, pk):
         rating.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def IndividualRatingViews(request, user, trip):
     try:
         rating = Rating.objects.filter(userID=user, tripID=trip)
