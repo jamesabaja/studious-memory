@@ -251,12 +251,12 @@ def RatingViews(request, pk):
 @api_view(['GET', 'PUT', 'DELETE'])
 def IndividualRatingViews(request, user, trip):
     try:
-        rating = Rating.objects.filter(userID=user, tripID=trip)
+        rating = Rating.objects.get(userID=user, tripID=trip)
     except Rating.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = RatingSerializer(rating, many=True)
+        serializer = RatingSerializer(rating)
         return Response(serializer.data)
     elif request.method == 'PUT':
         serializer = RatingSerializer(rating, data = request.data)
