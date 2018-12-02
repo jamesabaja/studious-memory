@@ -262,9 +262,9 @@ def BookingList(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
-def BookingViews(request, pk):
+def BookingViews(request, user):
     try:
-        booking = Booking.objects.filter(userID=pk)
+        booking = Booking.objects.filter(userID=user)
     except Booking.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
 
@@ -283,6 +283,20 @@ def BookingViews(request, pk):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        booking.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'DELETE'])
+def IndividualBookingViews(request, user, trip):
+    try:
+        booking = Booking.objects.filter(userID=user, tripID=trip)
+    except Booking.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = BookingSerializer(booking, many=True)
+        return Response(serializer.data)
     elif request.method == 'DELETE':
         booking.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
