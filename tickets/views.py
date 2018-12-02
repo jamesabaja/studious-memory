@@ -225,12 +225,12 @@ def RatingList(request):
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def RatingViews(request, pk):
     try:
-        rating = Rating.objects.get(userID=pk, tripID=pk)
+        rating = Rating.objects.filter(userID=pk)
     except Rating.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = RatingSerializer(rating)
+        serializer = RatingSerializer(rating, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = RatingSerializer(data = request.data)
