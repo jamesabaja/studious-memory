@@ -33,8 +33,8 @@ class Trip(models.Model):
   tripID = models.CharField(primary_key=True, max_length=100)
   departureDate = models.DateField()
   departureTime = models.TimeField()
-  sourceTerminal = models.OneToOneField(Terminal, related_name='sourceTerminal', on_delete=models.CASCADE)
-  destinationTerminal = models.OneToOneField(Terminal, related_name='destinationTerminal', on_delete=models.CASCADE)
+  sourceTerminal = models.ForeignKey(Terminal, related_name='sourceTerminal', on_delete=models.CASCADE)
+  destinationTerminal = models.ForeignKey(Terminal, related_name='destinationTerminal', on_delete=models.CASCADE)
   seatsLeft = models.IntegerField()
   price = models.IntegerField(default=0)
 
@@ -42,8 +42,8 @@ class Trip(models.Model):
     return "%s -> %s (%s)" % (self.sourceTerminal, self.destinationTerminal, self.tripID)
 
 class Rating(models.Model):
-  userID = models.OneToOneField(Passenger, on_delete=models.CASCADE)
-  tripID = models.OneToOneField(Trip, on_delete=models.CASCADE)
+  userID = models.ForeignKey(Passenger, on_delete=models.CASCADE)
+  tripID = models.ForeignKey(Trip, on_delete=models.CASCADE)
   rating = models.IntegerField()
 
   class Meta:
@@ -62,8 +62,8 @@ class Booking(models.Model):
     return '%s (%s)' % (self.tripID, self.userID)
 
 class Bus_Trip(models.Model):
-  busID = models.OneToOneField(Bus, on_delete=models.CASCADE)
-  tripID = models.OneToOneField(Trip, on_delete=models.CASCADE)
+  busID = models.ForeignKey(Bus, on_delete=models.CASCADE)
+  tripID = models.ForeignKey(Trip, on_delete=models.CASCADE)
 
   class Meta:
     unique_together = (('busID', 'tripID'),)
@@ -72,8 +72,8 @@ class Bus_Trip(models.Model):
     return '%s (%s)' % (self.tripID, self.busID)
 
 class Bus_Driver(models.Model):
-  busID = models.OneToOneField(Bus, on_delete=models.CASCADE)
-  driverID = models.OneToOneField(Driver, on_delete=models.CASCADE)
+  busID = models.ForeignKey(Bus, on_delete=models.CASCADE)
+  driverID = models.ForeignKey(Driver, on_delete=models.CASCADE)
 
   class Meta:
     unique_together = (('busID', 'driverID'),)
@@ -82,8 +82,8 @@ class Bus_Driver(models.Model):
     return '%s (%s)' % (self.driverID, self.busID)
 
 class CurrentTerminal(models.Model):
-  terminalID = models.OneToOneField(Terminal, on_delete=models.CASCADE)
-  tripID = models.OneToOneField(Trip, on_delete=models.CASCADE)
+  terminalID = models.ForeignKey(Terminal, on_delete=models.CASCADE)
+  tripID = models.ForeignKey(Trip, on_delete=models.CASCADE)
 
   class Meta:
     unique_together = (('terminalID', 'tripID'),)
