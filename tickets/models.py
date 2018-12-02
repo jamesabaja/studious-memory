@@ -36,6 +36,7 @@ class Trip(models.Model):
   sourceTerminal = models.OneToOneField(Terminal, related_name='sourceTerminal', on_delete=models.CASCADE)
   destinationTerminal = models.OneToOneField(Terminal, related_name='destinationTerminal', on_delete=models.CASCADE)
   seatsLeft = models.IntegerField()
+  price = models.IntegerField(default=0)
 
   def __str__(self):
     return "%s -> %s (%s)" % (self.sourceTerminal, self.destinationTerminal, self.tripID)
