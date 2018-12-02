@@ -17,6 +17,7 @@ urlpatterns = [
     path('trips/<str:pk>/', views.TripViews),
     path('rating/', views.RatingList),
     path('rating/<str:pk>/', views.RatingViews),
+    path('rating/<str:user>/<str:trip>/', views.IndividualRatingViews),
     path('booking/', views.BookingList),
     path('booking/<str:user>/', views.BookingViews),
     path('booking/<str:user>/<str:trip>/', views.IndividualBookingViews),

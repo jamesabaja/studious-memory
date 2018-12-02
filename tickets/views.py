@@ -248,6 +248,21 @@ def RatingViews(request, pk):
         rating.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET', 'DELETE'])
+def IndividualRatingViews(request, user, trip):
+    try:
+        rating = Rating.objects.filter(userID=user, tripID=trip)
+    except Rating.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = RatingSerializer(rating, many=True)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        rating.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['GET', 'POST'])
 def BookingList(request):
     if request.method == 'GET':
