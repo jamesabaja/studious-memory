@@ -227,7 +227,7 @@ def RatingViews(request, pk):
     try:
         rating = Rating.objects.filter(userID=pk)
     except Rating.DoesNotExist:
-            return Response(status = status.HTTP_404_NOT_FOUND)
+        return Response(status = status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = RatingSerializer(rating, many=True)
