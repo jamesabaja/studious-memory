@@ -258,6 +258,12 @@ def IndividualRatingViews(request, user, trip):
     if request.method == 'GET':
         serializer = RatingSerializer(rating, many=True)
         return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = RatingSerializer(rating, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         rating.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
