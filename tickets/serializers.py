@@ -24,7 +24,7 @@ class DriverSerializer(serializers.ModelSerializer):
 class TripSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Trip
-		fields = ('tripID', 'departureDate', 'departureTime', 'sourceTerminal', 'destinationTerminal', 'seatsLeft',)
+		fields = ('tripID', 'departureDate', 'departureTime', 'sourceTerminal', 'destinationTerminal', 'seatsLeft','price')
 
 class RatingSerializer(serializers.ModelSerializer):
 	class Meta:
